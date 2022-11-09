@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { getProductsFromCategoryAndQuery } from '../services/api';
+import { Link } from 'react-router-dom';
 import Category from '../Category';
 
 class Home extends Component {
@@ -51,6 +52,19 @@ class Home extends Component {
         >
           Pesquisar
         </button>
+        <nav>
+          <Link to="/shopping-cart" data-testid="shopping-cart-button">
+            Carrinho
+          </Link>
+        </nav>
+        <input
+          value={ infoMessage }
+          onChange={ this.handleChange }
+          placeholder="pesquise um produto"
+          type="text"
+          name="infoMessage"
+          id=""
+        />
         {
           infoMessage === '' && (
             <p data-testid="home-initial-message">
