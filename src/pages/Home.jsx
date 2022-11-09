@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import Category from '../Category';
 import { Link } from 'react-router-dom';
+
 
 class Home extends Component {
   state = {
@@ -35,7 +37,7 @@ class Home extends Component {
             </p>
           )
         }
-
+        <Category />
       </div>
     );
   }
