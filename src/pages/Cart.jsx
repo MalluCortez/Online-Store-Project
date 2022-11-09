@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export class Cart extends Component {
+class Cart extends Component {
   state = {
     hasProdut: false,
   };
