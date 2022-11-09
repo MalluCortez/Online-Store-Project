@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Category from '../Category';
 
 class Home extends Component {
   state = {
@@ -29,7 +30,7 @@ class Home extends Component {
             </p>
           )
         }
-
+        <Category />
       </div>
     );
   }
