@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export class ShoppingCart extends Component {
+export class Cart extends Component {
   state = {
     hasProdut: false,
   };
@@ -18,4 +18,4 @@ export class ShoppingCart extends Component {
   }
 }
 
-export default ShoppingCart;
+export default Cart;
