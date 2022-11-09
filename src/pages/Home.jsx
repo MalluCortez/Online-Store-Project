@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { getProductsFromCategoryAndQuery } from '../services/api';
+// test
 
 class Home extends Component {
   state = {
