@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { getProductsFromCategoryAndQuery } from '../services/api';
-// test
+import Category from '../Category';
 
 class Home extends Component {
   state = {
@@ -72,7 +72,7 @@ class Home extends Component {
             )) }
           </div>
         )}
-
+        <Category />
       </div>
     );
   }
