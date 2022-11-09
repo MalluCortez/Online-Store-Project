@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Category from '../Category';
 
-
-
 class Home extends Component {
   state = {
     infoMessage: '',
