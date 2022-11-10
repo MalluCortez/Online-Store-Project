@@ -27,6 +27,15 @@ class Home extends Component {
     this.getApi(infoMessage);
   };
 
+  saveLocalStorage = (element) => {
+    const intemStorage = JSON.parse(localStorage.getItem('products'));
+    if (intemStorage === null) {
+      localStorage.setItem('products', JSON.stringify([element]));
+    } else {
+      localStorage.setItem('products', JSON.stringify([...intemStorage, element]));
+    }
+  };
+
   render() {
     const { infoMessage, query, onClick } = this.state;
     return (
@@ -75,6 +84,13 @@ class Home extends Component {
                 <h3>{element.title}</h3>
                 <p>{element.price}</p>
                 <img src={ element.thumbnail } alt={ element.title } />
+                <button
+                  type="button"
+                  data-testid="product-add-to-cart"
+                  onClick={ () => this.saveLocalStorage(element) }
+                >
+                  Adicionar ao carrinho
+                </button>
               </div>
             )) }
           </div>
