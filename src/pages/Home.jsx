@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { getProductsFromCategoryAndQuery } from '../services/api';
-import Category from '../Category';
+import Category from '../components/Category';
 
 class Home extends Component {
   state = {
@@ -57,14 +57,7 @@ class Home extends Component {
             Carrinho
           </Link>
         </nav>
-        <input
-          value={ infoMessage }
-          onChange={ this.handleChange }
-          placeholder="pesquise um produto"
-          type="text"
-          name="infoMessage"
-          id=""
-        />
+
         {
           infoMessage === '' && (
             <p data-testid="home-initial-message">
