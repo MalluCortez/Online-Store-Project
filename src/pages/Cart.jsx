@@ -28,7 +28,7 @@ class Cart extends Component {
     const num = 0;
     return (
       <div>
-        { localStorage.length > num ? cart.map((element, idx) => (
+        { cart.length > num ? cart.map((element, idx) => (
           <div key={ idx }>
             <h3 data-testid="shopping-cart-product-name">{element[num].title}</h3>
             <h3 data-testid="shopping-cart-product-quantity">
