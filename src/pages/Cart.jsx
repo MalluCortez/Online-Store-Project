@@ -62,7 +62,7 @@ class Cart extends Component {
     const num = 0;
     return (
       <div>
-        { cart.length > num ? cart.map((element, idx) => (
+        { localStorage.length > num ? cart.map((element, idx) => (
           <div key={ idx }>
             <button
               type="button"
