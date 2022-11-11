@@ -13,7 +13,6 @@ class Home extends Component {
   getApi = async () => {
     const { infoMessage } = this.state;
     const product = await getProductsFromCategoryAndQuery('', infoMessage);
-    console.log(product);
     this.setState({ query: product.results });
   };
 
@@ -73,8 +72,17 @@ class Home extends Component {
                 key={ element.id }
               >
                 <h3>{element.title}</h3>
-                <p>{element.price}</p>
+                <p>
+                  R$
+                  {element.price}
+                </p>
                 <img src={ element.thumbnail } alt={ element.title } />
+                <Link
+                  to={ `details/${element.id}` }
+                  data-testid="product-detail-link"
+                >
+                  <button type="button">Detalhes</button>
+                </Link>
               </div>
             )) }
           </div>

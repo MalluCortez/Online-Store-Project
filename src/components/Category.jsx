@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { getCategories, getCategoriesId } from '../services/api';
 
 class Category extends Component {
@@ -21,7 +22,6 @@ class Category extends Component {
 
   handleClick = (id) => {
     this.getApi(id);
-    console.log(id);
   };
 
   render() {
@@ -55,8 +55,17 @@ class Category extends Component {
             {listCatProduc.map((element) => (
               <div data-testid="product" key={ element.id }>
                 <h3>{element.title}</h3>
-                <p>{element.price}</p>
+                <p>
+                  R$
+                  {element.price}
+                </p>
                 <img src={ element.thumbnail } alt={ element.title } />
+                <Link
+                  to={ `details/${element.id}` }
+                  data-testid="product-detail-link"
+                >
+                  <button type="button">Detalhes</button>
+                </Link>
               </div>
             ))}
             {' '}
