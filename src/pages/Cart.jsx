@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class Cart extends Component {
   constructor() {
@@ -64,7 +65,7 @@ class Cart extends Component {
     const num = 0;
     return (
       <div>
-        { local !== null ? cart.map((element, idx) => (
+        { local !== null && local !== undefined ? cart.map((element, idx) => (
           <div key={ idx }>
             <button
               type="button"
@@ -92,10 +93,16 @@ class Cart extends Component {
               -
             </button>
           </div>
-        )) : (
+        )) : ''}
+        {local !== null && local !== undefined ? (
+          <Link to="/checkout" data-testid="checkout-products">
+            Finalizar compra
+          </Link>
+        ) : (
           <h3 data-testid="shopping-cart-empty-message">
             Seu carrinho está vazio
-          </h3>)}
+          </h3>
+        )}
       </div>
     );
   }
