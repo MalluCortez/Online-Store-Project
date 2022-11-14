@@ -59,10 +59,12 @@ class Cart extends Component {
 
   render() {
     const { cart } = this.state;
+    const local = localStorage.getItem('products');
+    console.log(local);
     const num = 0;
     return (
       <div>
-        { localStorage.length > num ? cart.map((element, idx) => (
+        { local !== null ? cart.map((element, idx) => (
           <div key={ idx }>
             <button
               type="button"
