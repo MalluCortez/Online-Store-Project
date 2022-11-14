@@ -77,8 +77,8 @@ class Details extends React.Component {
 
   render() {
     const { productDetails: { title, thumbnail, price }, productDetails,
-      radio1, radio2, radio3, radio4,
-      radio5, email, text, onClick, invalid, radioValue } = this.state;
+      radio1, radio2, radio3, radio4, radio5,
+      email, text, onClick, invalid, radioValue } = this.state;
     return (
       <div>
         <h1 data-testid="product-detail-name">{title}</h1>
