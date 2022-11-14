@@ -7,55 +7,31 @@ class Details extends React.Component {
   state = {
     productDetails: {},
     email: '',
-    rating: 0,
     text: '',
+    radioValue: '',
+    radio1: false,
+    radio2: false,
+    radio3: false,
+    radio4: false,
+    radio5: false,
+    onClick: false,
+    invalid: false,
   };
 
   async componentDidMount() {
     const { match: { params: { id } } } = this.props;
     const productDetails = await getProductById(id);
-    const itemStorage = JSON.parse(localStorage.getItem(productDetails.id));
-    if (itemStorage === null) {
-      this.setState({ productDetails });
-    } else {
-      this.setState({
-        productDetails,
-        email: itemStorage[0].email,
-        rating: itemStorage[0].rating,
-        text: itemStorage[0].text,
-      });
-    }
+    this.setState({
+      productDetails,
+    });
   }
 
   saveLocalStorage = (element) => {
-    const intemStorage = JSON.parse(localStorage.getItem('product'));
+    const intemStorage = JSON.parse(localStorage.getItem('products'));
     if (intemStorage === null) {
-      localStorage.setItem('product', JSON.stringify([element]));
+      localStorage.setItem('products', JSON.stringify([element]));
     } else {
-      localStorage.setItem('product', JSON.stringify([...intemStorage, element]));
-    }
-  };
-
-  setLocalStorage = () => {
-    const { productDetails } = this.state;
-    const itemStorage = JSON.parse(localStorage.getItem(productDetails.id));
-    const { email, rating, text } = this.state;
-    if (itemStorage === null) {
-      localStorage.setItem(productDetails.id, JSON.stringify(
-        [
-          {
-            email,
-            text,
-            rating,
-          },
-        ],
-      ));
-    } else {
-      localStorage.setItem(productDetails.id, JSON.stringify([...itemStorage, {
-        email,
-        text,
-        rating,
-      }]));
+      localStorage.setItem('products', JSON.stringify([...intemStorage, element]));
     }
   };
 
@@ -63,23 +39,56 @@ class Details extends React.Component {
     const { name, value } = target;
     this.setState({
       [name]: value,
+      invalid: false,
+    });
+  };
+
+  handleChangeRadio = ({ target }) => {
+    const { name, value, checked } = target;
+    this.setState({
+      [name]: checked,
+      radioValue: value,
+      invalid: false,
     });
   };
 
   handleClick = () => {
-    this.setState({
-      email: '',
-      text: '',
-    });
-    this.setLocalStorage();
+    const { match: { params: { id } } } = this.props;
+    const { email, text, radioValue } = this.state;
+    if (email !== '' && radioValue !== ''
+    && email.includes('@') && email.includes('.com')) {
+      const intemStorage = JSON.parse(localStorage.getItem(id));
+      if (intemStorage === null) {
+        localStorage.setItem(id, JSON.stringify([{ email, text, rating: radioValue }]));
+      } else {
+        localStorage.setItem(id, JSON.stringify([...intemStorage, {
+          email,
+          text,
+          rating: radioValue,
+        }]));
+      }
+      this.setState({
+        onClick: true,
+        invalid: false,
+        email: '',
+        text: '',
+        radio1: false,
+        radio2: false,
+        radio3: false,
+        radio4: false,
+        radio5: false,
+      });
+    } else {
+      this.setState({
+        invalid: true,
+      });
+    }
   };
 
   render() {
-    const { productDetails: { title, thumbnail, price },
-      productDetails, email, text } = this.state;
-
-    const result = JSON.parse(localStorage.getItem(productDetails.id));
-
+    const { productDetails: { title, thumbnail, price }, productDetails,
+      radio1, radio2, radio3, radio4, radio5,
+      email, text, onClick, invalid, radioValue } = this.state;
     return (
       <div>
         <h1 data-testid="product-detail-name">{title}</h1>
@@ -97,100 +106,110 @@ class Details extends React.Component {
             Carrinho
           </Link>
         </nav>
-
-        <form>
-          <fieldset>
+        <form action="">
+          <input
+            type="email"
+            name="email"
+            value={ email }
+            data-testid="product-detail-email"
+            onChange={ this.handleChange }
+            id=""
+          />
+          <label htmlFor="radio1">
+            1
             <input
-              data-testid="product-detail-email"
-              type="email"
-              name="email"
-              value={ email }
-              onChange={ this.handleChange }
+              type="radio"
+              data-testid="1-rating"
+              value="1"
+              checked={ radio1 }
+              onChange={ this.handleChangeRadio }
+              name="radio1"
+              id="radio1"
             />
-          </fieldset>
-          <fieldset>
-            <label
-              htmlFor="radio"
-            >
-              1
-              <input
-                data-testid="1-rating"
-                type="radio"
-                name="rating"
-                onChange={ this.handleChange }
-              />
-            </label>
-            <label
-              htmlFor="radio"
-            >
-              2
-              <input
-                data-testid="2-rating"
-                type="radio"
-                name="rating"
-                onChange={ this.handleChange }
-              />
-            </label>
-            <label
-              htmlFor="radio"
-            >
-              3
-              <input
-                data-testid="3-rating"
-                type="radio"
-                name="rating"
-                onChange={ this.handleChange }
-              />
-            </label>
-            <label
-              htmlFor="radio"
-            >
-              4
-              <input
-                data-testid="4-rating"
-                type="radio"
-                name="rating"
-                onChange={ this.handleChange }
-              />
-            </label>
-            <label
-              htmlFor="radio"
-            >
-              5
-              <input
-                data-testid="5-rating"
-                type="radio"
-                name="rating"
-                onChange={ this.handleChange }
-              />
-            </label>
-          </fieldset>
-          <fieldset>
-            <textarea
-              data-testid="product-detail-evaluation"
-              name="text"
-              value={ text }
-              onChange={ this.handleChange }
+          </label>
+          <label htmlFor="radio2">
+            2
+            <input
+              type="radio"
+              data-testid="2-rating"
+              value="2"
+              checked={ radio2 }
+              onChange={ this.handleChangeRadio }
+              name="radio2"
+              id="radio2"
             />
-          </fieldset>
+          </label>
+          <label htmlFor="radio3">
+            3
+            <input
+              data-testid="3-rating"
+              type="radio"
+              value="3"
+              checked={ radio3 }
+              onChange={ this.handleChangeRadio }
+              name="radio3"
+              id="radio3"
+            />
+          </label>
+          <label htmlFor="radio4">
+            4
+            <input
+              type="radio"
+              data-testid="4-rating"
+              value="4"
+              checked={ radio4 }
+              onChange={ this.handleChangeRadio }
+              name="radio4"
+              id="radio4"
+            />
+          </label>
+          <label htmlFor="radio5">
+            5
+            <input
+              type="radio"
+              data-testid="5-rating"
+              value="5"
+              checked={ radio5 }
+              onChange={ this.handleChangeRadio }
+              name="radio5"
+              id="radio5"
+            />
+          </label>
+          <textarea
+            name="text"
+            value={ text }
+            onChange={ this.handleChange }
+            data-testid="product-detail-evaluation"
+            id=""
+            cols="30"
+            rows="10"
+          />
           <button
-            data-testid="submit-review-btn"
             type="button"
             onClick={ this.handleClick }
+            data-testid="submit-review-btn"
           >
             Enviar
           </button>
+
         </form>
-        {
-          result !== null
-          && result.map((e) => (
-            <>
-              <p data-testid="review-card-email">{e.email}</p>
-              <p data-testid="review-card-evaluation">{e.text}</p>
-              <p data-testid="review-card-rating">{e.rating}</p>
-            </>
-          ))
-        }
+        {invalid && <p data-testid="error-msg">Campos inválidos</p>}
+
+        {JSON.parse(localStorage.getItem(productDetails.id)) !== null && (
+          JSON.parse(localStorage.getItem(productDetails.id)).map((element, index) => (
+            <div key={ index }>
+              <p data-testid="review-card-email">{element.email}</p>
+              <p data-testid="review-card-rating">{element.email.rating}</p>
+              <p data-testid="review-card-evaluation">{element.text}</p>
+            </div>))
+        )}
+        {onClick && (
+          <div>
+            <p data-testid="review-card-email">{ email }</p>
+            <p data-testid="review-card-rating">{ radioValue }</p>
+            <p data-testid="review-card-evaluation">{ text }</p>
+          </div>
+        )}
       </div>
     );
   }
