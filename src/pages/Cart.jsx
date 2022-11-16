@@ -27,9 +27,14 @@ class Cart extends Component {
 
   increaseQuantity = (element) => {
     const intemStorage = JSON.parse(localStorage.getItem('products'));
-    localStorage.setItem('products', JSON.stringify([...intemStorage, element[0]]));
-    const a = this.getLocalStorage();
-    this.setState({ cart: a });
+    const filterElement = intemStorage.filter((prod) => prod.id === element[0].id);
+    console.log(element[0].available_quantity);
+    if (filterElement.length < element[0].available_quantity) {
+      localStorage.setItem('products', JSON.stringify([...intemStorage, element[0]]));
+      const a = this.getLocalStorage();
+      console.log(a);
+      this.setState({ cart: a });
+    }
   };
 
   decreaseQuantity = (element) => {
@@ -60,8 +65,8 @@ class Cart extends Component {
 
   render() {
     const { cart } = this.state;
+    console.log(cart);
     const local = localStorage.getItem('products');
-    console.log(local);
     const num = 0;
     return (
       <div>
