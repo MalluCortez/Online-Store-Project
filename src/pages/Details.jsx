@@ -89,6 +89,7 @@ class Details extends React.Component {
     const { productDetails: { title, thumbnail, price }, productDetails,
       radio1, radio2, radio3, radio4, radio5,
       email, text, onClick, invalid, radioValue } = this.state;
+    const local = localStorage.getItem('products');
     return (
       <div>
         <h1 data-testid="product-detail-name">{title}</h1>
@@ -104,6 +105,9 @@ class Details extends React.Component {
         <nav>
           <Link to="/shopping-cart" data-testid="shopping-cart-button">
             Carrinho
+            <p data-testid="shopping-cart-size">
+              { local === null || local === undefined ? 0 : JSON.parse(local).length}
+            </p>
           </Link>
         </nav>
         <form action="">
